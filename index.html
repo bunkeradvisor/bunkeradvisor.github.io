@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bunker Advisor: Find, Compare & Get Quotes for Top Survival Bunkers by State</title>
+
+  <meta name="description" content="Use Bunker Advisor to easily find and compare leading companies that build custom and prefab survival bunkers across the US. Generate an AI-ready prompt for ChatGPT, Gemini, or Copilot to get vendor recommendations, pricing, demo locations, and common user issues for underground shelters." />
+
+  <meta name="keywords" content="bunker, survival bunker, build bunker, underground shelter, bunker companies, bunker comparison, bunkeradvisor, tornado shelter, storm shelter, underground bunker cost, prefab bunker prices, custom built bunker, fallout shelter" />
+
+  <meta name="author" content="Bunker Advisor" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Bunker Advisor",
+    "url": "https://bunkeradvisor.github.io/",
+    "description": "Generate an AI prompt to compare top bunker builders by state, find demo locations and estimate costs."
+  }
+  </script>
+  <style>
+    /* Global and Thematic Styles (Dark/Shelter Theme) */
+    :root {
+      --color-dark-bg: #1e293b;
+      --color-medium-bg: #334155;
+      --color-text: #f8fafc;
+      --color-primary: #10b981; /* Safety Green Accent */
+      --color-secondary: #0ea5e9;
+      --color-border: #475569;
+      --color-shadow: rgba(0, 0, 0, 0.4);
+      --font-family-sans: 'Roboto', Arial, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family-sans);
+      margin: 0;
+      padding: 24px 16px;
+      background: var(--color-dark-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    /* Structure and Responsiveness */
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 16px 0;
+      border-bottom: 2px solid var(--color-primary);
+    }
+
+    /* SEO Improvement 4: Ensure H1 is the main and unique primary heading */
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 900;
+    }
+
+    .logo-icon {
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 1.2em;
+    }
+
+    p.lead {
+      color: var(--color-text);
+      font-size: 1.1rem;
+      margin-top: 10px;
+      font-weight: 300;
+    }
+
+    /* Form and Controls */
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: var(--color-primary);
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      margin-bottom: 24px;
+      font-size: 1rem;
+      background-color: var(--color-medium-bg);
+      color: var(--color-text);
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23f8fafc%22%20d%3D%22M10.293%203.293L6%207.586%201.707%203.293A1%201%200%2000.293%204.707l4.5%204.5a1%201%200%20001.414%200l4.5-4.5a1%201%200%2010-1.414-1.414z%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: right 10px top 50%;
+      cursor: pointer;
+    }
+
+    select:focus {
+        border-color: var(--color-primary);
+        outline: none;
+    }
+
+    /* Prompt Generation Block */
+    .prompt-box {
+      display: none;
+      background: var(--color-medium-bg);
+      border: 1px solid var(--color-border);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px var(--color-shadow);
+    }
+
+    /* SEO Improvement 4: Change to H2 for sub-heading */
+    .prompt-box h2 {
+        color: var(--color-primary);
+        font-size: 1.1rem;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 180px;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      font-family: monospace;
+      resize: none;
+      background-color: #0f172a;
+      color: var(--color-text);
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .copy-btn {
+      background: var(--color-primary);
+      color: var(--color-dark-bg);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .copy-btn:hover {
+        background-color: #059669;
+        transform: translateY(-1px);
+    }
+
+    .copy-btn:active {
+        transform: translateY(0);
+    }
+
+    .copied-msg {
+      color: var(--color-secondary);
+      opacity: 0;
+      transition: opacity .4s ease-in-out;
+      font-weight: bold;
+    }
+
+    .copied-msg.show {
+        opacity: 1;
+    }
+
+    /* AI Links */
+    .links {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      border-top: 1px dashed var(--color-border);
+      padding-top: 15px;
+    }
+
+    .ai-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-secondary);
+      color: var(--color-text);
+      padding: 8px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .ai-link:hover {
+        background-color: #0284c7;
+    }
+
+    /* SEO Improvement 5: Added descriptive alt text */
+    .ai-link img {
+      width: 20px;
+      height: 20px;
+      filter: invert(1);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border);
+      color: #94a3b8;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 600px) {
+      body {
+        padding: 16px 12px;
+      }
+      h1 {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+      }
+      p.lead {
+        font-size: 1rem;
+      }
+      .controls, .links {
+        justify-content: center;
+      }
+      .copy-btn {
+        flex-grow: 1;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1><span class="logo-icon">🛡️</span>Bunker Advisor</h1>
+      <p class="lead">Select a U.S. state to generate a ready-to-use <strong>AI Prompt</strong> that compares top companies building custom bunkers in that region.</p>
+    </header>
+
+    <label for="state-select"><strong>Choose the state where you want to build a survival bunker</strong></label>
+    <select id="state-select">
+      <option value="">-- Select a state --</option>
+      <option>Alabama</option>
+      <option>Alaska</option>
+      <option>Arizona</option>
+      <option>Arkansas</option>
+      <option>California</option>
+      <option>Colorado</option>
+      <option>Connecticut</option>
+      <option>Delaware</option>
+      <option>Florida</option>
+      <option>Georgia</option>
+      <option>Hawaii</option>
+      <option>Idaho</option>
+      <option>Illinois</option>
+      <option>Indiana</option>
+      <option>Iowa</option>
+      <option>Kansas</option>
+      <option>Kentucky</option>
+      <option>Louisiana</option>
+      <option>Maine</option>
+      <option>Maryland</option>
+      <option>Massachusetts</option>
+      <option>Michigan</option>
+      <option>Minnesota</option>
+      <option>Mississippi</option>
+      <option>Missouri</option>
+      <option>Montana</option>
+      <option>Nebraska</option>
+      <option>Nevada</option>
+      <option>New Hampshire</option>
+      <option>New Jersey</option>
+      <option>New Mexico</option>
+      <option>New York</option>
+      <option>North Carolina</option>
+      <option>North Dakota</option>
+      <option>Ohio</option>
+      <option>Oklahoma</option>
+      <option>Oregon</option>
+      <option>Pennsylvania</option>
+      <option>Rhode Island</option>
+      <option>South Carolina</option>
+      <option>South Dakota</option>
+      <option>Tennessee</option>
+      <option>Texas</option>
+      <option>Utah</option>
+      <option>Vermont</option>
+      <option>Virginia</option>
+      <option>Washington</option>
+      <option>West Virginia</option>
+      <option>Wisconsin</option>
+      <option>Wyoming</option>
+    </select>
+
+    <div id="prompt-box" class="prompt-box">
+      <h2>Generated AI Prompt</h2>
+      <textarea id="prompt-text" readonly></textarea>
+      <div class="controls">
+        <button id="copy-btn" class="copy-btn">Copy Prompt</button>
+        <span id="copied-msg" class="copied-msg">✅ Prompt copied to clipboard</span>
+      </div>
+
+      <div class="links" aria-hidden="false">
+        <a id="chatgpt-link" class="ai-link" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/openai.svg" alt="ChatGPT AI Assistant">Launch in ChatGPT
+        </a>
+        <a id="gemini-link" class="ai-link" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlegemini.svg" alt="Google Gemini AI">Launch in Gemini
+        </a>
+        <a id="copilot-link" class="ai-link" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/githubcopilot.svg" alt="Microsoft Copilot AI">Launch in Copilot
+        </a>
+      </div>
+    </div>
+
+    <footer>
+      <p>Bunker Advisor helps you prepare better requests for AI assistants, compare providers, and find demo locations. Use this tool to speed up vendor research and prepare questions for quotes on your custom underground shelter project.</p>
+    </footer>
+  </div>
+
+  <script>
+    const select = document.getElementById('state-select');
+    const promptBox = document.getElementById('prompt-box');
+    const promptText = document.getElementById('prompt-text');
+    const copyBtn = document.getElementById('copy-btn');
+    const copiedMsg = document.getElementById('copied-msg');
+
+    select.addEventListener('change', () => {
+      const state = select.value;
+      if (!state) {
+        promptBox.style.display = 'none';
+        copiedMsg.style.opacity = '0';
+        return;
+      }
+
+      // Functional part remains in English as per the original requirement
+      const prompt = `I live in ${state}. Please find and compare the top 20 companies that build custom survival bunkers in ${state}. For each company: briefly describe a typical bunker model, indicate if the company has a showroom or a demo site to visit, provide estimated base price and typical additional costs (excavation, crane, waterproofing, permits), expected lead time, and summarize common user-reported issues from forums or Reddit (installation, moisture, corrosion, ventilation, maintenance). At the end, recommend the top 3 best-fit options for my needs.`;
+
+      promptText.value = prompt;
+      promptBox.style.display = 'block';
+
+      // AI Links functionality
+      const encoded = encodeURIComponent(prompt);
+      document.getElementById('chatgpt-link').href = `https://chat.openai.com/?prompt=${encoded}`;
+      document.getElementById('gemini-link').href = `https://gemini.google.com/app?hl=en&q=${encoded}`;
+      document.getElementById('copilot-link').href = `https://copilot.microsoft.com/?q=${encoded}`;
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(promptText.value);
+        copiedMsg.classList.add('show');
+        copiedMsg.style.opacity = '1';
+        setTimeout(() => { copiedMsg.style.opacity = '0'; copiedMsg.classList.remove('show'); }, 2000);
+      } catch (e) {
+        alert('Copy failed — please select and copy manually');
+      }
+    });
+  </script>
+</body>
+</html>
